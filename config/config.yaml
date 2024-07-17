@@ -1,0 +1,10 @@
+data:
+  filepath: "../data/GenomeCRISPR.csv"
+
+train_size: 0.7
+
+training_args:
+  epochs: 60
+
+model:
+  save_path: "/Users/janmejay/Work/PersonalProjects/CRISPRGenie/src/models/results"
