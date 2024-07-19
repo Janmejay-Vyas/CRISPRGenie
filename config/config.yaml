@@ -7,4 +7,4 @@ training_args:
   epochs: 60
 
 model:
-  save_path: "/Users/janmejay/Work/PersonalProjects/CRISPRGenie/src/models/results"
+  save_path: "../src/models/results"

@@ -64,12 +64,12 @@ def train_sequence_generation(config_path):
 
     # Train the model
     epochs = config['training_args']['epochs']
+    save_path = config['model']['save_path']
+    model_path = f"{save_path}/{current_date}"
+    os.makedirs(model_path, exist_ok = True)
     results = train(model, train_loader, val_loader, tokenizer, optimizer, epochs, device, log_file_path=f"results/logs/{current_date}.log")
 
     # Save the trained model
-    save_path = config['model']['save_path']
-    model_path = f"{save_path}/{current_date}"
-    os.makedir(model_path, exist_ok = True)
     torch.save(model, f"{model_path}/sgRNA_model.pth")
 
     print("Training Completed!")
