@@ -2,38 +2,39 @@
 
 class CustomTokenizer:
     def __init__(self):
-        # Include all nucleotide bases, special tokens, and necessary characters for gene IDs
         self.token_to_id = {
-            '[PAD]': 0, '[ID]': 1, '[SOS]': 2, '[EOS]': 3,
-            'A': 4, 'T': 5, 'G': 6, 'C': 7, 
-            'E': 8, 'N': 9, 'S': 10, 
-            '0': 11, '1': 12, '2': 13, '3': 14, '4': 15,
-            '5': 16, '6': 17, '7': 18, '8': 19, '9': 20
+            '[PAD]': 0, '[SOS]': 1, '[EOS]': 2,
+            'A': 3, 'T': 4, 'G': 5, 'C': 6,
+            '[ID]': 7,  # Special token for gene ID start
+            '0': 8, '1': 9, '2': 10, '3': 11, '4': 12,
+            '5': 13, '6': 14, '7': 15, '8': 16, '9': 17
         }
         self.id_to_token = {v: k for k, v in self.token_to_id.items()}
+
+    def encode(self, text):
+        tokens = []
+        i = 0
+        while i < len(text):
+            if text[i:i+4] == 'ENSG':  # Recognize the ENSG gene ID prefix
+                tokens.append('[ID]')
+                i += 4  # Skip the 'ENSG'
+            elif text[i] == '[':  # Special tokens handling
+                special_token_end = text.find(']', i)
+                tokens.append(text[i:special_token_end+1])
+                i = special_token_end + 1
+            else:
+                tokens.append(text[i])
+                i += 1
+        return [self.token_to_id.get(token, self.token_to_id['[PAD]']) for token in tokens]
 
     @property
     def vocab_size(self):
         return len(self.token_to_id)
 
-    def encode(self, text):
-        """ Convert text to a list of token IDs, treating each character as a token unless enclosed in []. """
-        tokens = []
-        i = 0
-        while i < len(text):
-            if text[i] == '[':  # Start of a special token
-                special_token_end = text.find(']', i)
-                if special_token_end != -1:
-                    tokens.append(text[i:special_token_end+1])
-                    i = special_token_end + 1
-                else:
-                    tokens.append(text[i])  # Fallback if ']' is missing
-                    i += 1
-            else:
-                tokens.append(text[i])
-                i += 1
-        return [self.token_to_id[token] for token in tokens if token in self.token_to_id]
-
     def decode(self, token_ids):
         """ Convert a list of token IDs back to a string. """
         return ''.join(self.id_to_token.get(token_id, '') for token_id in token_ids)
+    
+    def is_special_token(self, token_ids):
+        """Return if a token is a special token"""
+        return [token_ids > 3]
