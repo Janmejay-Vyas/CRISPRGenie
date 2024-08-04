@@ -334,7 +334,7 @@ if master_process:
     print(f"total desired batch size: {total_batch_size}")
     print(f"=> calculated gradient accumulation steps: {grad_accum_steps}")
 
-df = pd.read_csv('./data/GenomeCRISPR.csv')
+df = pd.read_csv('./src/CRISPRGenie/data/GenomeCRISPR.csv')
 gene_ids = df['ensg'].tolist()
 sequences = df['sequence'].tolist()
 tokenizer = CustomTokenizer()
@@ -346,7 +346,7 @@ torch.set_float32_matmul_precision('high')
 
 model = GPT(GPTConfig(vocab_size=tokenizer.vocab_size, block_size=T))
 model.to(device)
-use_compile = True # False
+use_compile = False # False
 if use_compile:
     model = torch.compile(model)
 if ddp:

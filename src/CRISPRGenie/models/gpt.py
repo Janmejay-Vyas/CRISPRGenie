@@ -5,14 +5,29 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import inspect
+from dataclasses import dataclass
 from CRISPRGenie.models.utils import Block, CausalSelfAttention, MLP
-from CRISPRGenie.utils import load_config, set_ddp_env_vars
+from CRISPRGenie.utils import load_config, set_ddp_env_vars, set_seed
 
-# Loading the configuration
-GPTConfig = load_config('../../../config/config.yaml')['GPTConfig']
+# BUG: Config file not synced, fix this
+# # Loading the configuration
+# GPTConfig = load_config('../../../config/config.yaml')['GPTConfig']
 
 # Setting the DDP environment variables
 ddp, ddp_rank, ddp_local_rank, ddp_world_size, master_process, device_type = set_ddp_env_vars()
+
+# Set seed for reproducibility
+set_seed(1337)
+
+@dataclass
+class GPTConfig:
+    block_size: int = 1024
+    vocab_size: int = 50257
+    n_layer: int = 12
+    n_head: int = 12
+    n_embd: int = 768
+    sos_token_id: int = 1
+    eos_token_id: int = 2
 
 class GPT(nn.Module):
 

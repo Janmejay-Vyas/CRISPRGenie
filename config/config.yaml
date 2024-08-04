@@ -1,10 +1,26 @@
-data:
-  filepath: "../data/GenomeCRISPR.csv"
+# Config file for the project
 
-train_size: 0.7
+# GPTConfig:
+#   block_size: 1024
+#   vocab_size: 50257
+#   n_layer: 12
+#   n_head: 12
+#   n_embd: 768
+#   sos_token_id: 1
+#   eos_token_id: 2
 
-training_args:
-  epochs: 60
+# TrainingConfig:
+#   total_batch_size: 524288
+#   batch_size: 64
+#   block_size: 1024
+#   use_compile: false
+#   max_lr: 0.0006
+#   warmup_steps: 715
+#   max_steps: 19073
+#   log_dir: "./logs"
 
-model:
-  save_path: "../src/models/results"
+# DataConfig:
+#   data_dir: "./data"
+#   train_file: "GenomeCRISPR_train.csv"
+#   test_file: "GenomeCRISPR_test.csv"
+#   split_ratio: 0.8

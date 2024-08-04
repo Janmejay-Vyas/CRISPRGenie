@@ -240,3 +240,6 @@ __pycache__/
 
 # CSV files
 *.csv
+
+# Package Files
+dist/
