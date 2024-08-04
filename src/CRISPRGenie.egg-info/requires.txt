@@ -1,0 +1,16 @@
+joblib
+matplotlib
+pandas
+jupyterlab
+seaborn
+scipy
+scikit-learn
+tqdm
+build
+openpyxl
+pytest
+twine
+typer
+torch
+accelerate
+ipykernel

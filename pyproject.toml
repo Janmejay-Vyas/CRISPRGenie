@@ -1,0 +1,118 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+
+[tool.jupytext]
+formats = "ipynb,py:percent"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["F401"]
+
+
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+exclude = '''
+
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git
+    | \.venv
+    | _build
+    | build
+    | dist
+  )/
+  | paths.py           # excluding paths.py because I like my paths
+                      # long sometimes
+)
+'''
+
+
+[tool.interrogate]
+ignore-init-method = true
+ignore-init-module = false
+ignore-magic = false
+ignore-semiprivate = false
+ignore-private = false
+ignore-property-decorators = false
+ignore-module = false
+ignore-nested-functions = false
+ignore-nested-classes = false
+ignore-setters = false
+ignore-overloaded-functions = false
+fail-under = 80
+# example values
+exclude = ["setup.py", "docs", "build"]
+# example regex
+ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
+ext = []
+# possible values: sphinx (default), google
+# TODO(shivashankarv): Causes an error for some reason.
+#style = sphinx
+# possible values: 0 (minimal output), 1 (-v), 2 (-vv)
+verbose = 0
+quiet = false
+whitelist-regex = []
+color = true
+omit-covered-files = false
+# output file logation
+generate-badge = "."
+badge-format = "svg"
+
+[tool.isort]
+profile = "black"
+
+#TODO: Add pytest-cov to github worklfow in a separate issue. This would likely #require `pip install pytest-cov` and this commented block should work as is.
+
+#[tool.pytest.ini_options]
+#addopts = "-v --cov --cov-report term-missing"
+#testpaths = [
+#    "tests",
+#]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+#this might be useful if you have multiple folders in "src" folder
+#include = ["pkg*"]  # alternatively: `exclude = ["additional*"]`
+#namespaces = false
+
+[project]
+name = "CRISPRGenie"
+version = "0.0.1"
+dependencies = [
+'joblib',
+'matplotlib',
+'pandas',
+'jupyterlab',
+'seaborn',
+'scipy',
+'scikit-learn',
+'tqdm',
+'build',
+'openpyxl',
+'pytest',
+'twine',
+'typer',
+'torch',
+'accelerate',
+'ipykernel',
+
+
+]
+authors = [
+  { name="Janmejay Vyas", email="janmejayv4@gmail.com" },
+]
+description = "A GPT model to generate sgRNA sequences based on provided gene IDs."
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+

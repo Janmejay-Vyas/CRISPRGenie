@@ -1,0 +1,35 @@
+name: "CRISPRGenie"
+channels:
+- conda-forge
+dependencies:
+# Core stack
+- python=3.10
+- build
+- ipykernel
+- ipywidgets
+- jupyter
+- jupyterlab
+- jupytext  # since we use jupyter notebooks for code.
+- pip
+# Standard packages
+- numpy
+- pandas
+- scikit-learn
+- matplotlib
+- seaborn
+# cli
+- typer
+# Testing
+- pytest
+- pytest-cov
+- hypothesis
+- coverage
+# Code style
+- darglint
+- flake8
+- black
+- interrogate
+- pre-commit
+- pylint
+- cookiecutter
+- pipx
