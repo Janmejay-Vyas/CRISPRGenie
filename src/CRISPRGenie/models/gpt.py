@@ -14,7 +14,7 @@ from CRISPRGenie.utils import load_config, set_ddp_env_vars, set_seed
 # GPTConfig = load_config('../../../config/config.yaml')['GPTConfig']
 
 # Setting the DDP environment variables
-ddp, ddp_rank, ddp_local_rank, ddp_world_size, master_process, device_type = set_ddp_env_vars()
+ddp, ddp_rank, ddp_local_rank, ddp_world_size, master_process, device_type, device = set_ddp_env_vars()
 
 # Set seed for reproducibility
 set_seed(1337)

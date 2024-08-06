@@ -11,7 +11,7 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 import torch.distributed as dist
 from CRISPRGenie.models.tokenizer import CustomTokenizer
 from CRISPRGenie.utils import load_config, get_lr
-from CRISPRGenie.models.gpt import GPT, GPTConfig, ddp, ddp_local_rank, ddp_world_size, master_process, device_type, ddp_rank
+from CRISPRGenie.models.gpt import GPT, GPTConfig, ddp, ddp_local_rank, ddp_world_size, master_process, device_type, device, ddp_rank
 from CRISPRGenie.data.dataloader import DataLoaderLite
 
 def train_genie():
@@ -41,7 +41,7 @@ def train_genie():
 
     # Define the GPT model
     model = GPT(GPTConfig(vocab_size=tokenizer.vocab_size, block_size=T))
-    model.to(device_type)
+    model.to(device)
     use_compile = False # True
     if use_compile:
         model = torch.compile(model)
@@ -91,7 +91,7 @@ def train_genie():
                     x, y = val_loader.next_batch()
                     if x is None:
                         break
-                    x, y = x.to(device_type), y.to(device_type)
+                    x, y = x.to(device), y.to(device)
                     with torch.autocast(device_type=device_type, dtype=torch.bfloat16):
                         logits, loss = model(x, y)
                     loss = loss / val_loss_steps
@@ -156,7 +156,7 @@ def train_genie():
             if x is None:
                 train_loader.reset()
                 x, y = train_loader.next_batch()
-            x, y = x.to(device_type), y.to(device_type)
+            x, y = x.to(device), y.to(device)
             if ddp:
                 model.require_backward_grad_sync = (micro_step == grad_accum_steps - 1)
             with torch.autocast(device_type=device_type, dtype=torch.bfloat16):

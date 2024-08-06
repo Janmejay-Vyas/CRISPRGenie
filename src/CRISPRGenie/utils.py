@@ -34,7 +34,7 @@ def set_ddp_env_vars():
 
     device_type = "cuda" if device.startswith("cuda") else "cpu"
 
-    return ddp, ddp_rank, ddp_local_rank, ddp_world_size, master_process, device_type
+    return ddp, ddp_rank, ddp_local_rank, ddp_world_size, master_process, device_type, device
 
 
 def set_seed(seed):
