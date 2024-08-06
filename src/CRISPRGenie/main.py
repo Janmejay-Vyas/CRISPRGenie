@@ -112,7 +112,7 @@ def train_genie():
                     }
                     torch.save(checkpoint, checkpoint_path)
 
-        # TODO: Bug in lines 422-434, fix the bug and uncomment the code
+        # TODO: Bug in lines 123-135, fix the bug and uncomment the code
         # # Generate text from the model once in a while
         # if (step > 0 and step % 2 == 0) or last_step: # TODO: testing generation with step % 2, replace with step % 250
         #     model.eval()
